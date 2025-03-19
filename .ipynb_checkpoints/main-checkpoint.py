@@ -56,9 +56,9 @@ test_label = torch.from_numpy(test_label - 1)
 test_dataset = torch.utils.data.TensorDataset(test_data, test_label)
 test_dataloader = torch.utils.data.DataLoader(dataset=test_dataset, batch_size=batch_size, shuffle=True)
 
-for i in range(c_dim):
-    centers[i] = torch.randn(dimension)
-    centers[i] = centers[i].cuda()
+#for i in range(c_dim):
+#    centers[i] = torch.randn(dimension)
+#    centers[i] = centers[i].cuda()
 
 # Optimizers
 optimizer = torch.optim.Adam(model.parameters(), lr=lr, betas=(b1, b2))
