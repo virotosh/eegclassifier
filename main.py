@@ -90,7 +90,9 @@ for e in range(n_epochs):
         label = Variable(label.cuda().type(LongTensor))
 
         
-        data, label = helpers().augment(data, label, batch_size)
+        aug_data, aug_label = helpers().augment(_data.trainData, _data.trainLabel, batch_size)
+        data = torch.cat((data, aug_data))
+        label = torch.cat((label, aug_label))
         
         tok, outputs = model(data)
 

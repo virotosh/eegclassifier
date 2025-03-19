@@ -35,7 +35,5 @@ class helpers:
         aug_label = torch.from_numpy(aug_label-1).cuda()
         aug_label = aug_label.long()
 
-        data = torch.cat((data, aug_data))
-        label = torch.cat((label, aug_label))
         
-        return data, label
+        return aug_data, aug_label
