@@ -75,7 +75,7 @@ num = 0
 Y_true = 0
 Y_pred = 0
 
-# Train the cnn model
+# Train the model
 total_step = len(dataloader)
 curr_lr = lr
 
