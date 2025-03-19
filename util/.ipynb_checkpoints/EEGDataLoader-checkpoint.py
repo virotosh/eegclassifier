@@ -1,5 +1,6 @@
 import scipy.io
 import numpy as np
+import torch
 
 class EEGDataLoader:
 
@@ -13,6 +14,9 @@ class EEGDataLoader:
         self.trainLabel = None
         self.testData = None
         self.testLabel = None
+
+        # loading data
+        self.load_data()
 
     def load_data(self):
         train_data = []
@@ -38,6 +42,7 @@ class EEGDataLoader:
         shuffle_num = np.random.permutation(len(self.trainData))
         self.trainData = self.trainData[shuffle_num, :, :, :]
         self.trainLabel = self.trainLabel[shuffle_num]
+        self.trainLabel = self.trainLabel - 1 # class 1,2 to 0,1
 
         # test data
         test_data = []
@@ -55,11 +60,13 @@ class EEGDataLoader:
             test_label.append(test_label_tmp)
         self.testData = np.concatenate(test_data)
         self.testLabel = np.concatenate(test_label)
+        self.testLabel = self.testLabel - 1 # class 1,2 to 0,1
 
-        # standardize
+        # normalize
         target_mean = np.mean(self.trainData)
         target_std = np.std(self.trainData)
         self.trainData = (self.trainData - target_mean) / target_std
         self.testData = (self.testData - target_mean) / target_std
 
-        #return self.trainData, self.trainLabel, self.testData, self.testLabel
+
+        

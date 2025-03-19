@@ -13,18 +13,9 @@ import torch.autograd as autograd
 from util.EEGDataLoader import EEGDataLoader
 from model.EEGTransformer import EEGTransformer
 
-_dir = 'data/'
-params = {
-            'subjectID' : 1
-}
-_data = EEGDataLoader(_dir, params)
-_data.load_data()
-
 
 batch_size = 100
 n_epochs = 2000
-img_height = 22
-img_width = 600
 #c_dim = 4
 lr = 0.0002
 b1 = 0.5
@@ -48,17 +39,23 @@ model = nn.DataParallel(model, device_ids=[i for i in range(len(gpus))])
 model = model.cuda()
 #centers = {}
 
-img, label, test_data, test_label = _data.trainData, _data.trainLabel, _data.testData, _data.testLabel
 
-img = torch.from_numpy(img)
-label = torch.from_numpy(label - 1)
+_dir = 'data/'
+params = {
+            'subjectID' : 1
+}
+_data = EEGDataLoader(_dir, params)
+_data.load_data()
 
+data, label, test_data, test_label = _data.trainData, _data.trainLabel, _data.testData, _data.testLabel
 
-dataset = torch.utils.data.TensorDataset(img, label)
+data = torch.from_numpy(data)
+label = torch.from_numpy(label)
+dataset = torch.utils.data.TensorDataset(data, label)
 dataloader = torch.utils.data.DataLoader(dataset=dataset, batch_size=batch_size, shuffle=True)
 
 test_data = torch.from_numpy(test_data)
-test_label = torch.from_numpy(test_label - 1)
+test_label = torch.from_numpy(test_label)
 test_dataset = torch.utils.data.TensorDataset(test_data, test_label)
 test_dataloader = torch.utils.data.DataLoader(dataset=test_dataset, batch_size=batch_size, shuffle=True)
 
@@ -85,16 +82,12 @@ curr_lr = lr
 for e in range(n_epochs):
     in_epoch = time.time()
     model.train()
-    for i, (img, label) in enumerate(dataloader):
+    for i, (data, label) in enumerate(dataloader):
 
-        img = Variable(img.cuda().type(Tensor))
+        data = Variable(data.cuda().type(Tensor))
         label = Variable(label.cuda().type(LongTensor))
 
-        #aug_data, aug_label = interaug(allData, allLabel)
-        #img = torch.cat((img, aug_data))
-        #label = torch.cat((label, aug_label))
-
-        tok, outputs = model(img)
+        tok, outputs = model(data)
 
         loss = criterion_cls(outputs, label)
 
@@ -107,8 +100,7 @@ for e in range(n_epochs):
     if (e + 1) % 1 == 0:
         model.eval()
         Tok, Cls = model(test_data)
-
-
+        
         loss_test = criterion_cls(Cls, test_label)
         y_pred = torch.max(Cls, 1)[1]
         acc = float((y_pred == test_label).cpu().numpy().astype(int).sum()) / float(test_label.size(0))
