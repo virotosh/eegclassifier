@@ -89,7 +89,8 @@ for e in range(n_epochs):
         data = Variable(data.cuda().type(Tensor))
         label = Variable(label.cuda().type(LongTensor))
 
-        data, label = helpers.augment(data, label, batch_size)
+        
+        data, label = helpers().augment(data, label, batch_size)
         
         tok, outputs = model(data)
 
