@@ -1,3 +1,15 @@
+import time
+
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+import torch.nn.init as init
+from torch import Tensor
+
+from torch.utils.data import DataLoader
+from torch.autograd import Variable
+import torch.autograd as autograd
+
 from util.EEGDataLoader import EEGDataLoader
 from model.EEGTransformer import EEGTransformer
 
@@ -13,27 +25,12 @@ batch_size = 100
 n_epochs = 2000
 img_height = 22
 img_width = 600
-channels = 1
-c_dim = 4
+#c_dim = 4
 lr = 0.0002
 b1 = 0.5
 b2 = 0.999
 alpha = 0.0002
-dimension = (190, 50)
-start_epoch = 0
-
-import time
-
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
-import torch.nn.init as init
-from torch import Tensor
-
-from torch.utils.data import DataLoader
-from torch.autograd import Variable
-#from torchsummary import summary
-import torch.autograd as autograd
+#dimension = (190, 50)
 
 gpus = [1]
 from torch.backends import cudnn
@@ -49,7 +46,7 @@ criterion_cls = torch.nn.CrossEntropyLoss().cuda()
 model = EEGTransformer()
 model = nn.DataParallel(model, device_ids=[i for i in range(len(gpus))])
 model = model.cuda()
-centers = {}
+#centers = {}
 
 img, label, test_data, test_label = _data.trainData, _data.trainLabel, _data.testData, _data.testLabel
 
@@ -65,9 +62,9 @@ test_label = torch.from_numpy(test_label - 1)
 test_dataset = torch.utils.data.TensorDataset(test_data, test_label)
 test_dataloader = torch.utils.data.DataLoader(dataset=test_dataset, batch_size=batch_size, shuffle=True)
 
-for i in range(c_dim):
-    centers[i] = torch.randn(dimension)
-    centers[i] = centers[i].cuda()
+#for i in range(c_dim):
+#    centers[i] = torch.randn(dimension)
+#    centers[i] = centers[i].cuda()
 
 # Optimizers
 optimizer = torch.optim.Adam(model.parameters(), lr=lr, betas=(b1, b2))
