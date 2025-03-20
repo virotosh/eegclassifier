@@ -65,8 +65,9 @@ test_label = Variable(test_label.type(LongTensor))
 
 Accuracies = []
 
-# Train the model
+
 for e in range(n_epochs):
+    # train the model
     in_epoch = time.time()
     model.train()
     for i, (data, label) in enumerate(dataloader):
@@ -92,20 +93,20 @@ for e in range(n_epochs):
 
     out_epoch = time.time()
 
-    if (e + 1) % 1 == 0:
-        model.eval()
-        TOK, CLS = model(test_data)
-        
-        loss_test = criterion_cls(CLS, test_label)
-        y_pred = torch.max(CLS, 1)[1] # get indices of max prob
-        acc = float((y_pred == test_label).cpu().numpy().astype(int).sum()) / float(test_label.size(0))
-        train_pred = torch.max(outputs, 1)[1]
-        train_acc = float((train_pred == label).cpu().numpy().astype(int).sum()) / float(label.size(0))
-        print('Epoch:', e,
-              '  Train loss: %.6f' % loss.detach().cpu().numpy(),
-              '  Test loss: %.6f' % loss_test.detach().cpu().numpy(),
-              '  Train accuracy %.6f' % train_acc,
-              '  Test accuracy is %.6f' % acc)
-        Accuracies.append(acc)
+    # predict
+    model.eval()
+    TOK, CLS = model(test_data)
+    
+    loss_test = criterion_cls(CLS, test_label)
+    y_pred = torch.max(CLS, 1)[1] # get indices of max prob
+    acc = float((y_pred == test_label).cpu().numpy().astype(int).sum()) / float(test_label.size(0))
+    train_pred = torch.max(outputs, 1)[1]
+    train_acc = float((train_pred == label).cpu().numpy().astype(int).sum()) / float(label.size(0))
+    print('Epoch:', e,
+          '  Train loss: %.6f' % loss.detach().cpu().numpy(),
+          '  Test loss: %.6f' % loss_test.detach().cpu().numpy(),
+          '  Train accuracy %.6f' % train_acc,
+          '  Test accuracy is %.6f' % acc)
+    Accuracies.append(acc)
         
 print('The average accuracy is:', np.mean(Accuracies))
