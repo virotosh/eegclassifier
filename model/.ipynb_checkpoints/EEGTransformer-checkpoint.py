@@ -1,6 +1,5 @@
 import os
 import numpy as np
-#import argparse
 import math
 import glob
 import random
@@ -10,26 +9,12 @@ import time
 import sys
 import scipy.io
 
-#import torchvision.transforms as transforms
-#from torchvision.utils import save_image, make_grid
-
-#from torch.utils.data import DataLoader
-#from torch.autograd import Variable
-#from torchsummary import summary
-#import torch.autograd as autograd
-#from torchvision.models import vgg19
-
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import torch.nn.init as init
 from torch import Tensor
 
-#from torch.utils.data import Dataset
-#from PIL import Image
-#from sklearn.decomposition import PCA
-
-#from torchvision.transforms import Compose, Resize, ToTensor
 from einops import rearrange, reduce, repeat
 from einops.layers.torch import Rearrange, Reduce
 
@@ -47,7 +32,7 @@ class PatchEmbedding(nn.Module):
             nn.Dropout(0.5),
         )
         self.projection = nn.Sequential(
-            nn.Conv2d(40, emb_size, (1, 1), stride=(1, 1)),  # 5 is better than 1
+            nn.Conv2d(40, emb_size, (1, 1), stride=(1, 1)),
             Rearrange('b e (h) (w) -> b (h w) e'),
         )
 

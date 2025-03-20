@@ -17,7 +17,7 @@ from model.EEGTransformer import EEGTransformer
 
 
 batch_size = 100
-n_epochs = 2000
+n_epochs = 100#2000
 #c_dim = 4
 lr = 0.0002
 b1 = 0.5
@@ -78,9 +78,6 @@ Y_true = 0
 Y_pred = 0
 
 # Train the model
-total_step = len(dataloader)
-curr_lr = lr
-
 for e in range(n_epochs):
     in_epoch = time.time()
     model.train()
