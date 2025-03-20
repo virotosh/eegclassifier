@@ -7,7 +7,7 @@ class EEGDataLoader:
     def __init__(self, data_dir):
         """For initialization"""
         self.data_dir = data_dir
-
+        
         self.trainData = None
         self.trainLabel = None
         self.testData = None

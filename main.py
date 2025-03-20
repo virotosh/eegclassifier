@@ -37,7 +37,7 @@ model = model.cuda()
 _dir = 'data/'
 _data = EEGDataLoader(_dir)
 
-# data format 1000x3x120 (time x eeg channels x trials) note: time is sequence, split by milisecond
+# data format trainData: 360x3x1000 (trials x eeg channels x time) note: time is sequence, split by milisecond
 data, label, test_data, test_label = _data.trainData, _data.trainLabel, _data.testData, _data.testLabel
 
 data = torch.from_numpy(data)
