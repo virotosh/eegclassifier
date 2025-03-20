@@ -1,4 +1,3 @@
-import time
 import numpy as np
 
 import torch
@@ -68,7 +67,6 @@ Accuracies = []
 
 for e in range(n_epochs):
     # train the model
-    in_epoch = time.time()
     model.train()
     for i, (data, label) in enumerate(dataloader):
 
@@ -90,8 +88,6 @@ for e in range(n_epochs):
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
-
-    out_epoch = time.time()
 
     # predict
     model.eval()
