@@ -42,9 +42,6 @@ dataloader = torch.utils.data.DataLoader(dataset=dataset, batch_size=batch_size,
 
 test_data = torch.from_numpy(test_data)
 test_label = torch.from_numpy(test_label)
-test_dataset = torch.utils.data.TensorDataset(test_data, test_label)
-test_dataloader = torch.utils.data.DataLoader(dataset=test_dataset, batch_size=batch_size, shuffle=True)
-
 test_data = Variable(test_data.type(Tensor))
 test_label = Variable(test_label.type(LongTensor))
 
