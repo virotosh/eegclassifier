@@ -39,9 +39,9 @@ criterion_cls = torch.nn.CrossEntropyLoss().cuda()
 model = EEGTransformer()
 model = nn.DataParallel(model, device_ids=[i for i in range(len(gpus))])
 model = model.cuda()
-#centers = {}
 
 
+# load pilot data 
 _dir = 'data/'
 params = {
             'subjectID' : 1
@@ -49,6 +49,7 @@ params = {
 _data = EEGDataLoader(_dir, params)
 _data.load_data()
 
+# data format 1000x3x120 (time x eeg channels x trials) note: time is sequence, split by milisecond
 data, label, test_data, test_label = _data.trainData, _data.trainLabel, _data.testData, _data.testLabel
 
 data = torch.from_numpy(data)
@@ -61,21 +62,13 @@ test_label = torch.from_numpy(test_label)
 test_dataset = torch.utils.data.TensorDataset(test_data, test_label)
 test_dataloader = torch.utils.data.DataLoader(dataset=test_dataset, batch_size=batch_size, shuffle=True)
 
-#for i in range(c_dim):
-#    centers[i] = torch.randn(dimension)
-#    centers[i] = centers[i].cuda()
-
 # Optimizers
 optimizer = torch.optim.Adam(model.parameters(), lr=lr, betas=(b1, b2))
 
 test_data = Variable(test_data.type(Tensor))
 test_label = Variable(test_label.type(LongTensor))
 
-bestAcc = 0
-averAcc = 0
-num = 0
-Y_true = 0
-Y_pred = 0
+Accuracy = []
 
 # Train the model
 for e in range(n_epochs):
@@ -118,13 +111,5 @@ for e in range(n_epochs):
               '  Test loss: %.6f' % loss_test.detach().cpu().numpy(),
               '  Train accuracy %.6f' % train_acc,
               '  Test accuracy is %.6f' % acc)
-        num = num + 1
-        averAcc = averAcc + acc
-        if acc > bestAcc:
-            bestAcc = acc
-            Y_true = test_label
-            Y_pred = y_pred
-
-averAcc = averAcc / num
-print('The average accuracy is:', averAcc)
-print('The best accuracy is:', bestAcc)
+        Accuracy.append(acc)
+print('The average accuracy is:', np.mean(Accuracy))
