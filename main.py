@@ -92,12 +92,12 @@ for e in range(n_epochs):
     
     loss_test = criterion_cls(probs, test_label)
     y_pred = torch.max(probs, 1)[1] # get indices of max prob
-    acc = float((y_pred == test_label).cpu().numpy().astype(int).sum()) / float(test_label.size(0))
+    test_acc = float((y_pred == test_label).cpu().numpy().astype(int).sum()) / float(test_label.size(0))
     print('Epoch:', e,
           '  Train loss: %.6f' % loss.detach().cpu().numpy(),
           '  Test loss: %.6f' % loss_test.detach().cpu().numpy(),
           '  Train accuracy %.6f' % train_acc,
-          '  Test accuracy is %.6f' % acc)
-    accuracies.append(acc)
+          '  Test accuracy is %.6f' % test_acc)
+    accuracies.append(test_acc)
         
 print('Average accuracy:', np.mean(accuracies))
