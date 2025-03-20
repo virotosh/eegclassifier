@@ -63,7 +63,7 @@ optimizer = torch.optim.Adam(model.parameters(), lr=lr, betas=(b1, b2))
 test_data = Variable(test_data.type(Tensor))
 test_label = Variable(test_label.type(LongTensor))
 
-Accuracy = []
+Accuracies = []
 
 # Train the model
 for e in range(n_epochs):
@@ -106,6 +106,6 @@ for e in range(n_epochs):
               '  Test loss: %.6f' % loss_test.detach().cpu().numpy(),
               '  Train accuracy %.6f' % train_acc,
               '  Test accuracy is %.6f' % acc)
-        Accuracy.append(acc)
+        Accuracies.append(acc)
         
-print('The average accuracy is:', np.mean(Accuracy))
+print('The average accuracy is:', np.mean(Accuracies))
