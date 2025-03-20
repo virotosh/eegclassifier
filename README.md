@@ -2,7 +2,7 @@
 
 input data format
 
-time x channels x trials
+trials x channels x time
 
 time is a sequence of eeg reading split by ms
 
