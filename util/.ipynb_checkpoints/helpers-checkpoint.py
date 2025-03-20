@@ -8,8 +8,8 @@ class helpers:
     def augment(self, data, label, batch_size):
         aug_data = []
         aug_label = []
-        for cls4aug in range(2):
-            cls_idx = np.where(label == cls4aug + 1)
+        for cls in [0,1]: # class 0,1 
+            cls_idx = np.where(label == cls)
             tmp_data = data[cls_idx]
             tmp_label = label[cls_idx]
 
