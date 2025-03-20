@@ -14,6 +14,7 @@ from model.EEGClassifier import EEGClassifier
 
 gpus = [1]
 
+# hyperparameters
 batch_size = 100
 n_epochs = 100
 lr = 0.0002
