@@ -101,11 +101,10 @@ for e in range(n_epochs):
         TOK, CLS = model(test_data)
         
         loss_test = criterion_cls(CLS, test_label)
-        y_pred = torch.max(CLS, 1)[1]
+        y_pred = torch.max(CLS, 1)[1] # get indices of max prob
         acc = float((y_pred == test_label).cpu().numpy().astype(int).sum()) / float(test_label.size(0))
         train_pred = torch.max(outputs, 1)[1]
         train_acc = float((train_pred == label).cpu().numpy().astype(int).sum()) / float(label.size(0))
-        print(CLS)
         print('Epoch:', e,
               '  Train loss: %.6f' % loss.detach().cpu().numpy(),
               '  Test loss: %.6f' % loss_test.detach().cpu().numpy(),
