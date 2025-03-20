@@ -18,7 +18,7 @@ from model.EEGTransformer import EEGTransformer
 
 
 batch_size = 100
-n_epochs = 100#2000
+n_epochs = 100
 lr = 0.0002
 b1 = 0.5
 b2 = 0.999

@@ -4,7 +4,7 @@ import torch
 
 class EEGDataLoader:
 
-    def __init__(self, data_dir, params):
+    def __init__(self, data_dir):
         """For initialization"""
         self.data_dir = data_dir
 
