@@ -107,4 +107,5 @@ for e in range(n_epochs):
               '  Train accuracy %.6f' % train_acc,
               '  Test accuracy is %.6f' % acc)
         Accuracy.append(acc)
+        
 print('The average accuracy is:', np.mean(Accuracy))
