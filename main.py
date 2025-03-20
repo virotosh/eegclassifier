@@ -102,4 +102,4 @@ for e in range(n_epochs):
           '  Test accuracy is %.6f' % acc)
     accuracies.append(acc)
         
-print('Average accuracy:', np.mean(Accuracies))
+print('Average accuracy:', np.mean(accuracies))
