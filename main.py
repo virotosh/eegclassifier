@@ -2,19 +2,17 @@ import numpy as np
 
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
-import torch.nn.init as init
 from torch import Tensor
 
 from torch.utils.data import DataLoader
 from torch.autograd import Variable
 import torch.autograd as autograd
 
-
 from util.helpers import helpers
 from util.EEGDataLoader import EEGDataLoader
 from model.EEGClassifier import EEGClassifier
 
+gpus = [1]
 
 batch_size = 100
 n_epochs = 100
@@ -23,7 +21,6 @@ b1 = 0.5
 b2 = 0.999
 alpha = 0.0002
 
-gpus = [1]
 
 Tensor = torch.cuda.FloatTensor
 LongTensor = torch.cuda.LongTensor
