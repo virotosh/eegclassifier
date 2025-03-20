@@ -24,9 +24,6 @@ b2 = 0.999
 alpha = 0.0002
 
 gpus = [1]
-from torch.backends import cudnn
-cudnn.benchmark = False
-cudnn.deterministic = True
 
 Tensor = torch.cuda.FloatTensor
 LongTensor = torch.cuda.LongTensor
@@ -62,7 +59,7 @@ optimizer = torch.optim.Adam(model.parameters(), lr=lr, betas=(b1, b2))
 test_data = Variable(test_data.type(Tensor))
 test_label = Variable(test_label.type(LongTensor))
 
-Accuracies = []
+accuracies = []
 
 
 for e in range(n_epochs):
@@ -103,6 +100,6 @@ for e in range(n_epochs):
           '  Test loss: %.6f' % loss_test.detach().cpu().numpy(),
           '  Train accuracy %.6f' % train_acc,
           '  Test accuracy is %.6f' % acc)
-    Accuracies.append(acc)
+    accuracies.append(acc)
         
 print('The average accuracy is:', np.mean(Accuracies))
