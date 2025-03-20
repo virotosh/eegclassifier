@@ -24,15 +24,15 @@ class PatchEmbedding(nn.Module):
         super().__init__()
 
         self.shallownet = nn.Sequential(
-            nn.Conv2d(1, 40, (1, 25), (1, 1)),
-            nn.Conv2d(40, 40, (3, 1), (1, 1)),
-            nn.BatchNorm2d(40),
+            nn.Conv2d(1, 100, (1, 25), (1, 1)),
+            nn.Conv2d(100, 100, (3, 1), (1, 1)),
+            nn.BatchNorm2d(100),
             nn.ELU(),
             nn.AvgPool2d((1, 75), (1, 15)),
             nn.Dropout(0.5),
         )
         self.projection = nn.Sequential(
-            nn.Conv2d(40, emb_size, (1, 1), stride=(1, 1)),
+            nn.Conv2d(100, emb_size, (1, 1), stride=(1, 1)),
             Rearrange('b e (h) (w) -> b (h w) e'),
         )
 
