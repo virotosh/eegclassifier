@@ -60,7 +60,7 @@ accuracies = []
 
 
 for e in range(n_epochs):
-    # train the model
+    # train
     model.train()
     for i, (data, label) in enumerate(dataloader):
 
