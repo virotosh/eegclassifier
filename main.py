@@ -6,7 +6,6 @@ from torch import Tensor
 
 from torch.utils.data import DataLoader
 from torch.autograd import Variable
-import torch.autograd as autograd
 
 from util.helpers import helpers
 from util.EEGDataLoader import EEGDataLoader
