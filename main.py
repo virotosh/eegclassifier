@@ -1,4 +1,5 @@
 import time
+import numpy as np
 
 import torch
 import torch.nn as nn
@@ -18,12 +19,10 @@ from model.EEGTransformer import EEGTransformer
 
 batch_size = 100
 n_epochs = 100#2000
-#c_dim = 4
 lr = 0.0002
 b1 = 0.5
 b2 = 0.999
 alpha = 0.0002
-#dimension = (190, 50)
 
 gpus = [1]
 from torch.backends import cudnn
@@ -99,10 +98,10 @@ for e in range(n_epochs):
 
     if (e + 1) % 1 == 0:
         model.eval()
-        Tok, Cls = model(test_data)
+        TOK, CLS = model(test_data)
         
-        loss_test = criterion_cls(Cls, test_label)
-        y_pred = torch.max(Cls, 1)[1]
+        loss_test = criterion_cls(CLS, test_label)
+        y_pred = torch.max(CLS, 1)[1]
         acc = float((y_pred == test_label).cpu().numpy().astype(int).sum()) / float(test_label.size(0))
         train_pred = torch.max(outputs, 1)[1]
         train_acc = float((train_pred == label).cpu().numpy().astype(int).sum()) / float(label.size(0))
