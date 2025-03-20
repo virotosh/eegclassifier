@@ -45,18 +45,18 @@ test_label = torch.from_numpy(test_label)
 test_dataset = torch.utils.data.TensorDataset(test_data, test_label)
 test_dataloader = torch.utils.data.DataLoader(dataset=test_dataset, batch_size=batch_size, shuffle=True)
 
-# Optimizers
-optimizer = torch.optim.Adam(model.parameters(), lr=lr, betas=(b1, b2))
-
 test_data = Variable(test_data.type(Tensor))
 test_label = Variable(test_label.type(LongTensor))
-
-accuracies = []
 
 
 model = EEGClassifier(num_channels=len(data[0][0]))
 model = nn.DataParallel(model, device_ids=[i for i in range(len(gpus))])
 model = model.cuda()
+
+# Optimizers
+optimizer = torch.optim.Adam(model.parameters(), lr=lr, betas=(b1, b2))
+
+accuracies = []
 
 for e in range(n_epochs):
     # train
