@@ -6,8 +6,6 @@ class EEGDataLoader:
 
     def __init__(self, data_dir, params):
         """For initialization"""
-        self.params = params
-        
         self.data_dir = data_dir
 
         self.trainData = None
@@ -21,12 +19,10 @@ class EEGDataLoader:
     def load_data(self):
         train_data = []
         train_label = []
-
-        subjectID = self.params['subjectID']
         
         datatype = "T" # T is train, E is test/experimental
         for session_index in [1,2,3]:
-            target_tmp = scipy.io.loadmat(self.data_dir + 'B0%d0%d%s.mat' % (subjectID, session_index,datatype))
+            target_tmp = scipy.io.loadmat(self.data_dir + 'B010%d%s.mat' % (session_index,datatype))
             train_data_tmp = target_tmp['data']
             train_label_tmp = target_tmp['label']
             train_data_tmp = np.transpose(train_data_tmp, (2, 1, 0))
@@ -49,7 +45,7 @@ class EEGDataLoader:
         test_label = []
         datatype = "E" # T is train, E is test/experimental
         for session_index in [4,5]:
-            test_tmp = scipy.io.loadmat(self.data_dir + 'B0%d0%d%s.mat' % (subjectID, session_index,datatype))
+            test_tmp = scipy.io.loadmat(self.data_dir + 'B010%d%s.mat' % (session_index,datatype))
             test_data_tmp = test_tmp['data']
             test_label_tmp = test_tmp['label']
             test_data_tmp = np.transpose(test_data_tmp, (2, 1, 0))
