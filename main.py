@@ -75,9 +75,9 @@ for e in range(n_epochs):
         label = torch.cat((label, aug_label))
         ###
         
-        _, probs = model(data)
+        _, outputs = model(data)
 
-        loss = criterion_cls(probs, label)
+        loss = criterion_cls(outputs, label)
 
         optimizer.zero_grad()
         loss.backward()
