@@ -161,7 +161,7 @@ class ClassificationHead(nn.Sequential):
         return x, out
 
 
-class EEGClassifer(nn.Sequential):
+class EEGClassifier(nn.Sequential):
     def __init__(self, emb_size=40, depth=10, n_classes=2, **kwargs):
         super().__init__(
 

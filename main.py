@@ -14,7 +14,7 @@ import torch.autograd as autograd
 
 from util.helpers import helpers
 from util.EEGDataLoader import EEGDataLoader
-from model.EEGClassifer import EEGClassifer
+from model.EEGClassifier import EEGClassifier
 
 
 batch_size = 100
@@ -35,7 +35,7 @@ criterion_l1 = torch.nn.L1Loss().cuda()
 criterion_l2 = torch.nn.MSELoss().cuda()
 criterion_cls = torch.nn.CrossEntropyLoss().cuda()
 
-model = EEGClassifer()
+model = EEGClassifier()
 model = nn.DataParallel(model, device_ids=[i for i in range(len(gpus))])
 model = model.cuda()
 
