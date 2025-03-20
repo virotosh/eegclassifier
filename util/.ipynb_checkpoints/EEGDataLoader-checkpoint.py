@@ -68,5 +68,4 @@ class EEGDataLoader:
         self.trainData = (self.trainData - target_mean) / target_std
         self.testData = (self.testData - target_mean) / target_std
 
-
-        
+    

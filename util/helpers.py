@@ -1,4 +1,3 @@
-import torch
 import numpy as np
 
 class helpers:
@@ -30,10 +29,5 @@ class helpers:
         aug_data = aug_data[aug_shuffle, :, :]
         aug_label = aug_label[aug_shuffle]
 
-        aug_data = torch.from_numpy(aug_data).cuda()
-        aug_data = aug_data.float()
-        aug_label = torch.from_numpy(aug_label-1).cuda()
-        aug_label = aug_label.long()
-
         
-        return aug_data, aug_label
+        return data, label
