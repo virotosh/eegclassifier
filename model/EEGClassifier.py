@@ -23,7 +23,7 @@ class PatchEmbedding(nn.Module):
     def __init__(self, emb_size=40):
         super().__init__()
 
-        self.shallownet = nn.Sequential(
+        self.cnnlayers = nn.Sequential(
             nn.Conv2d(1, 100, (1, 25), (1, 1)),
             nn.Conv2d(100, 100, (3, 1), (1, 1)), # 3 eeg channels
             nn.BatchNorm2d(100),
@@ -38,7 +38,7 @@ class PatchEmbedding(nn.Module):
 
     def forward(self, x: Tensor) -> Tensor:
         b, _, _, _ = x.shape
-        x = self.shallownet(x)
+        x = self.cnnlayers(x)
         x = self.projection(x)
         return x
 
