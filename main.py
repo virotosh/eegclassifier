@@ -75,9 +75,9 @@ for e in range(n_epochs):
         label = torch.cat((label, aug_label))
         ###
         
-        tok, outputs = model(data)
+        _, probs = model(data)
 
-        loss = criterion_cls(outputs, label)
+        loss = criterion_cls(probs, label)
 
         optimizer.zero_grad()
         loss.backward()
@@ -85,10 +85,10 @@ for e in range(n_epochs):
 
     # predict
     model.eval()
-    TOK, CLS = model(test_data)
+    _, probs = model(test_data)
     
-    loss_test = criterion_cls(CLS, test_label)
-    y_pred = torch.max(CLS, 1)[1] # get indices of max prob
+    loss_test = criterion_cls(probs, test_label)
+    y_pred = torch.max(prob, 1)[1] # get indices of max prob
     acc = float((y_pred == test_label).cpu().numpy().astype(int).sum()) / float(test_label.size(0))
     train_pred = torch.max(outputs, 1)[1]
     train_acc = float((train_pred == label).cpu().numpy().astype(int).sum()) / float(label.size(0))
