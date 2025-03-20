@@ -20,7 +20,7 @@ from einops.layers.torch import Rearrange, Reduce
 
 
 class PatchEmbedding(nn.Module):
-    def __init__(self, emb_size=40):
+    def __init__(self, emb_size):
         super().__init__()
 
         self.cnnlayers = nn.Sequential(
