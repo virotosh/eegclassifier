@@ -82,7 +82,10 @@ for e in range(n_epochs):
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
-
+    
+    train_pred = torch.max(outputs, 1)[1]
+    train_acc = float((train_pred == label).cpu().numpy().astype(int).sum()) / float(label.size(0))
+    
     # predict
     model.eval()
     _, probs = model(test_data)
@@ -90,8 +93,6 @@ for e in range(n_epochs):
     loss_test = criterion_cls(probs, test_label)
     y_pred = torch.max(probs, 1)[1] # get indices of max prob
     acc = float((y_pred == test_label).cpu().numpy().astype(int).sum()) / float(test_label.size(0))
-    train_pred = torch.max(outputs, 1)[1]
-    train_acc = float((train_pred == label).cpu().numpy().astype(int).sum()) / float(label.size(0))
     print('Epoch:', e,
           '  Train loss: %.6f' % loss.detach().cpu().numpy(),
           '  Test loss: %.6f' % loss_test.detach().cpu().numpy(),
