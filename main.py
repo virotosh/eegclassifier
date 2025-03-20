@@ -43,7 +43,6 @@ model = model.cuda()
 # load pilot data 
 _dir = 'data/'
 _data = EEGDataLoader(_dir, params)
-_data.load_data()
 
 # data format 1000x3x120 (time x eeg channels x trials) note: time is sequence, split by milisecond
 data, label, test_data, test_label = _data.trainData, _data.trainLabel, _data.testData, _data.testLabel
