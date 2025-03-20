@@ -28,11 +28,6 @@ criterion_l1 = torch.nn.L1Loss().cuda()
 criterion_l2 = torch.nn.MSELoss().cuda()
 criterion_cls = torch.nn.CrossEntropyLoss().cuda()
 
-model = EEGClassifier()
-model = nn.DataParallel(model, device_ids=[i for i in range(len(gpus))])
-model = model.cuda()
-
-
 # load pilot data 
 _dir = 'data/'
 _data = EEGDataLoader(_dir)
@@ -58,6 +53,10 @@ test_label = Variable(test_label.type(LongTensor))
 
 accuracies = []
 
+
+model = EEGClassifier(num_channels=len(data[0][0]))
+model = nn.DataParallel(model, device_ids=[i for i in range(len(gpus))])
+model = model.cuda()
 
 for e in range(n_epochs):
     # train

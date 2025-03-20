@@ -20,12 +20,12 @@ from einops.layers.torch import Rearrange, Reduce
 
 
 class PatchEmbedding(nn.Module):
-    def __init__(self, emb_size):
+    def __init__(self, emb_size, num_channels):
         super().__init__()
 
         self.cnnlayers = nn.Sequential(
             nn.Conv2d(1, 100, (1, 20), (1, 1)),
-            nn.Conv2d(100, 100, (3, 1), (1, 1)), # 3 eeg channels
+            nn.Conv2d(100, 100, (num_channels, 1), (1, 1)), # 3 eeg channels
             nn.BatchNorm2d(100),
             nn.ELU(),
             nn.AvgPool2d((1, 75), (1, 15)),
@@ -162,10 +162,10 @@ class ClassificationHead(nn.Sequential):
 
 
 class EEGClassifier(nn.Sequential):
-    def __init__(self, emb_size=40, depth=10, n_classes=2, **kwargs):
+    def __init__(self, emb_size=40, depth=10, n_classes=2, num_channels=3, **kwargs):
         super().__init__(
 
-            PatchEmbedding(emb_size),
+            PatchEmbedding(emb_size, num_channels),
             TransformerEncoder(depth, emb_size),
             ClassificationHead(emb_size, n_classes)
         )
