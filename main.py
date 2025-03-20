@@ -42,9 +42,6 @@ model = model.cuda()
 
 # load pilot data 
 _dir = 'data/'
-params = {
-            'subjectID' : 1
-}
 _data = EEGDataLoader(_dir, params)
 _data.load_data()
 
