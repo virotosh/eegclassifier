@@ -74,7 +74,7 @@ for e in range(n_epochs):
         data = Variable(data.cuda().type(Tensor))
         label = Variable(label.cuda().type(LongTensor))
 
-        # optional data augmentation
+        # optional: data augmentation
         aug_data, aug_label = helpers().augment(_data.trainData, _data.trainLabel, batch_size)
         aug_data = torch.from_numpy(aug_data).cuda().float()
         aug_label = torch.from_numpy(aug_label).cuda().long()
