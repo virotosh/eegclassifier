@@ -24,7 +24,7 @@ class PatchEmbedding(nn.Module):
         super().__init__()
 
         self.cnnlayers = nn.Sequential(
-            nn.Conv2d(1, 100, (1, 25), (1, 1)),
+            nn.Conv2d(1, 100, (1, 50), (1, 1)),
             nn.Conv2d(100, 100, (3, 1), (1, 1)), # 3 eeg channels
             nn.BatchNorm2d(100),
             nn.ELU(),
